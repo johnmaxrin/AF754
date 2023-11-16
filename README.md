@@ -9,8 +9,8 @@ The goal is to design an area-efficient pipelined module that supports unary ope
       $tanh(x) = \frac{\exp(x) - \exp(-x)}{\exp(x) + \exp(-x)}$
 - [ ] ***sigmoid*** <br>
       $\sigma(x) = \frac{1}{1 + \exp(-x)}$
-- [ ] ***ReLu: Rectified Linear Unit*** <br>
-      ${ReLU}(x) = \max(0, x)$
+- [ ] ***Leaky ReLu: Rectified Linear Unit*** <br>
+      ${ReLU}(x) = \max(0.o1 * x, x)$
 - [ ] ***SeLu: Scaled Exponential Linear Unit*** <br>
       $SeLU(x) = λ× (x>0)? x : exp(x)−1)$ <br>
       $λ \text{ and } \alpha \text{ are constants.}$
