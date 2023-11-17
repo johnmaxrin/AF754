@@ -1,5 +1,6 @@
 *.out
 *.ba
+*.bo
 *.so
 *.cxx
 *.o
