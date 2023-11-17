@@ -12,8 +12,8 @@ The goal is to design an area-efficient pipelined module that supports unary ope
 - [ ] ***Leaky ReLu: Rectified Linear Unit*** <br>
       ${ReLU}(x) = \max(0.o1 * x, x)$
 - [ ] ***SeLu: Scaled Exponential Linear Unit*** <br>
-      $SeLU(x) = λ× (x>0)? x : exp(x)−1)$ <br>
-      $λ \text{ and } \alpha \text{ are constants.}$
+      $SeLU(x) = λ× {(x>0)? x : a *exp(x)−1)}$ <br>
+      $λ = 1.0507009 \text{ and } \alpha = 1.6732632$
 
 ## Interfaces
 - [ ] `Fp32IFC()`
