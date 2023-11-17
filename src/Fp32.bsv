@@ -4,30 +4,65 @@ import FloatingPoint :: *;
 import FIFO :: *;
 import Fp32Interfaces :: *;
 import ClientServer :: *;
+import GetPut :: *;
 export mkExpH;
 
 
 
+// module mkEexpF(EexpFIFC);
+	
+ // endmodule
+
 module mkExpH(ExpHIFC);
+	
+	FpMULTIFC mult <- mkFloatingPointMultiplier;
 	FIFO#(Tuple2#(Float, Bit#(3))) req <- mkFIFO;
 	FIFO#(Float) res <- mkFIFO;
 	
-	FIFO#(Tuple2#(Float, Bit#(3))) temp1 <- mkFIFO;
-	FIFO#(Tuple2#(Float, Bit#(3))) temp2 <- mkFIFO;
+	FIFO#(Tuple3#(Float, Float, RoundMode)) multReq <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) multRes <- mkFIFO;
 	
+	FIFO#(Tuple2#(Float, Bit#(3))) temp1 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Bit#(3))) r1temp <- mkFIFO;
+
+	Reg#(Bit#(3)) ni <- mkReg(0);  //Jugaad
+	Reg#(Bit#(3)) i <- mkReg(0);
+	
+	Reg#(Float) acc1 <- mkReg(1);
+	Reg#(Bool) r2r3 <- mkReg(True);
+
 	rule r1;
 		match{.x0, .y0} = req.first; req.deq;
+		ni <= y0;
 		temp1.enq(tuple2(x0,y0));
 	endrule
-
-	rule r2;
-		match{.x1, .y1} = temp1.first; temp1.deq;
-		temp1.enq(tuple2((x1 << y1),y1));	
+	
+	rule r1inter;
+		r1temp.enq(temp1.first); 
+		temp1.deq;
+	endrule	
+		
+	rule r2(i < ni && r2r3);
+		match{.x1, .y1} = r1temp.first;
+		mult.request.put(tuple3(acc1,x1,Rnd_Nearest_Even));		
+		i <= i + 1;
+		r2r3 <= False;
+		$display("@r2 Prev i %d n:%d",i,ni);
 	endrule
 
-	rule r3;
-		match{.fREs,.fresy} = temp1.first; temp1.deq;
-		res.enq(fREs);
+	rule r3(i < ni && !r2r3 );
+		Tuple2#(Float, Exception) temp  <- mult.response.get();
+		Float tempRes = tpl_1(temp);
+		acc1 <= tempRes;
+		r2r3 <= True;
+		$display("Prev i %d n:%d",i,ni);
+	endrule
+
+	rule r4(i == ni);
+		Tuple2#(Float, Exception) temp  <- mult.response.get();
+		Float tempRes = tpl_1(temp);
+		res.enq(tempRes);
+		r1temp.deq;
 	endrule
 
 	return toGPServer(req,res);	
