@@ -9,9 +9,6 @@ export mkExpH;
 
 
 
-// module mkEexpF(EexpFIFC);
-	
- // endmodule
 
 module mkExpH(ExpHIFC);
 	
