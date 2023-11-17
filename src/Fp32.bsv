@@ -5,16 +5,102 @@ import FIFO :: *;
 import Fp32Interfaces :: *;
 import ClientServer :: *;
 import GetPut :: *;
+
 export mkExpH;
+export mkEexpF;
 
-
-
-<<<<<<< HEAD
-=======
-// module mkEexpF(EexpFIFC);
+module mkEexpF(EexpFIFC);
+	FIFO#(Float) res <- mkFIFO;
+	FIFO#(Float) req <- mkFIFO;
 	
- // endmodule
->>>>>>> 3044d13425a71aedfdd49b399f79a63ee2845b08
+	FIFO#(Float) temp <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm0 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm1 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm2 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm3 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm4 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm5 <- mkFIFO;
+	
+	
+	FIFO#(Float) fterm <- mkFIFO;
+	FIFO#(Float) fterm0 <- mkFIFO;
+	FIFO#(Float) fterm1 <- mkFIFO;
+	FIFO#(Float) fterm2 <- mkFIFO;
+	FIFO#(Float) fterm3 <- mkFIFO;
+	FIFO#(Float) fterm4 <- mkFIFO;
+	FIFO#(Float) fterm5 <- mkFIFO;
+	
+
+	FIFO#(Float) prfinal <- mkFIFO;
+        
+
+	ExpHIFC exph1 <- mkExpH;
+	ExpHIFC exph2 <- mkExpH;
+	ExpHIFC exph3 <- mkExpH;
+	ExpHIFC exph4 <- mkExpH;
+	ExpHIFC exph5 <- mkExpH;
+	ExpHIFC exph6 <- mkExpH;
+	
+	rule r1;
+		temp.enq(req.first); 
+		fterm.enq(req.first);
+		req.deq;
+	endrule
+	
+	rule terms;
+		exph1.request.put(tuple2(temp.first,2));		
+		exph2.request.put(tuple2(temp.first,3));		
+		exph3.request.put(tuple2(temp.first,4));		
+		exph4.request.put(tuple2(temp.first,5));		
+		exph5.request.put(tuple2(temp.first,6));		
+		exph6.request.put(tuple2(temp.first,7));		
+		temp.deq;
+	endrule
+	
+	
+// Simple Error Here!
+
+	rule r3;
+	      	let val0 <- exph.response.get();
+	      	fterm0.enq(val0);
+	      
+	      	let val1 <- exph1.response.get();
+	      	fterm1.enq(val1);
+	      	
+		let val2 <- exph2.response.get();
+	      	fterm2.enq(val2);
+	      	
+		let val3 <- exph3.response.get();
+	      	fterm3.enq(val3);
+	      	
+		let val4 <- exph4.response.get();
+	      	fterm4.enq(val4);
+	      	
+		let val5 <- exph5.response.get();
+	      	fterm5.enq(val5);
+	      
+	       
+	endrule	
+
+	rule r4;
+		Float fRes = fterm.first; fterm.deq;
+		Float  fRes0 = fterm0.first/2; fterm0.deq;
+		Float  fRes1 = fterm1.first/6; fterm1.deq;
+		Float  fRes2 = fterm2.first/24; fterm2.deq;
+		Float  fRes3 = fterm3.first/120; fterm3.deq;
+		Float  fRes4 = fterm4.first/720; fterm4.deq;
+		Float  fRes5 = fterm5.first/5040; fterm5.deq;		
+		prfinal.enq(fRes); 
+	endrule
+
+	rule r5;
+		Float fRes = prfinal.first; prfinal.deq;
+		res.enq(fRes);
+	endrule
+
+
+	return toGPServer(req,res); 
+endmodule
 
 module mkExpH(ExpHIFC);
 	
@@ -70,6 +156,14 @@ module mkExpH(ExpHIFC);
 
 	return toGPServer(req,res);	
 endmodule
+
+
+
+
+
+
+
+
 
 function Float selu(Float x);
 	Float l = 1.0507009;

@@ -1,8 +1,9 @@
 *.out
 *.ba
-*.bo
+src/*.bo
 *.so
 *.cxx
 *.o
 *.h
 *.swp
+src/Fp32.bo

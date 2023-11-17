@@ -11,14 +11,15 @@ import Fp32Interfaces :: *;
 
 module mkActivation();
 
-	ExpHIFC expH <- mkExpH;
-	
+	//ExpHIFC expH <- mkExpH;
+
+	EexpFIFC eexpf <- mkEexpF;
 	rule r1_A;
-		expH.request.put(tuple2(3,4));
+		eexpf.request.put(2);
 	endrule	
 
 	rule r2_A;
-		let x = expH.response.get();
+		let x = eexpf.response.get();
 		$display("%b ",x);
 		$finish;
 	endrule
