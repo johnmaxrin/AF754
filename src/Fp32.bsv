@@ -9,6 +9,12 @@ export mkExpH;
 
 
 
+<<<<<<< HEAD
+=======
+// module mkEexpF(EexpFIFC);
+	
+ // endmodule
+>>>>>>> 3044d13425a71aedfdd49b399f79a63ee2845b08
 
 module mkExpH(ExpHIFC);
 	
