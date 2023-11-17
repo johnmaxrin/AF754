@@ -14,7 +14,7 @@ module mkActivation();
 	ExpHIFC expH <- mkExpH;
 	
 	rule r1_A;
-		expH.request.put(tuple2(2,2));
+		expH.request.put(tuple2(3,4));
 	endrule	
 
 	rule r2_A;
