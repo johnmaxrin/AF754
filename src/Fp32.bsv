@@ -41,6 +41,14 @@ module mkEexpF(EexpFIFC);
 	ExpHIFC exph5 <- mkExpH;
 	ExpHIFC exph6 <- mkExpH;
 	
+	FIFO#(Float) fRes <- mkFIFO;
+	FIFO#(Float) fRes0 <- mkFIFO;
+	FIFO#(Float) fRes1 <- mkFIFO;
+	FIFO#(Float) fRes2 <- mkFIFO;
+	FIFO#(Float) fRes3 <- mkFIFO;
+	FIFO#(Float) fRes4 <- mkFIFO;
+	FIFO#(Float) fRes5 <- mkFIFO;
+	
 	rule r1;
 		temp.enq(req.first); 
 		fterm.enq(req.first);
@@ -83,22 +91,39 @@ module mkEexpF(EexpFIFC);
 	endrule	
 
 	rule r4;
-		Float fRes = fterm.first; fterm.deq;
-		Float  fRes0 = fterm0.first/2; fterm0.deq;
-		Float  fRes1 = fterm1.first/6; fterm1.deq;
-		Float  fRes2 = fterm2.first/24; fterm2.deq;
-		Float  fRes3 = fterm3.first/120; fterm3.deq;
-		Float  fRes4 = fterm4.first/720; fterm4.deq;
-		Float  fRes5 = fterm5.first/5040; fterm5.deq;	
-
-		// We have to add floating point addition too. For that make 
-		// use of the mkAddition module	already there and comeback here. 
-		// It is giving that error again. 
-		let finalz = 1 + fRes + fRes0 + fRes1 + fRes2 + fRes3 + fRes4 + fRes5;
-		prfinal.enq(finalz); 
+		fRes.enq(fterm.first); fterm.deq;
+		fRes0.enq((fterm0.first/2)); fterm0.deq;
+		fRes1.enq((fterm1.first/6)); fterm1.deq;
+		fRes2.enq((fterm2.first/24)); fterm2.deq;
+		fRes3.enq((fterm3.first/120)); fterm3.deq;
+		fRes4.enq((fterm4.first/720)); fterm4.deq;
+		fRes5.enq((fterm5.first/5040)); fterm5.deq;	
 	endrule
 
 	rule r5;
+		// We have to add floating point addition too. For that make 
+		// use of the mkAddition module	already there and comeback here. 
+		// It is giving that error again. 
+		// let finalz = 1 + fRes + fRes0 + fRes1 + fRes2 + fRes3 + fRes4 + fRes5;
+		//let finalz = 1 + fRes.first + fRes0.first + fRes1.first + fRes2.first+ fRes3.first + fRes4.first + fRes5.first;
+		fRes.deq;
+		fRes0.deq;
+		fRes1.deq;
+		fRes2.deq;
+		fRes3.deq;
+		fRes4.deq;
+		fRes5.deq;
+
+		let finalz = fRes.first + fRes0.first;
+		let finalz0 = fRes1.first + fRes2.first;
+		let finalz1 = fRes3.first + fRes4.first;
+		let finalz2 = fRes5.first + 0;
+
+		prfinal.enq(finalz); 
+
+	endrule
+
+	rule r6;
 		Float fRes = prfinal.first; prfinal.deq;
 		res.enq(fRes);
 	endrule
