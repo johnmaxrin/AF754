@@ -61,24 +61,24 @@ module mkEexpF(EexpFIFC);
 // Simple Error Here!
 
 	rule r3;
-	      	let val0 <- exph.response.get();
-	      	fterm0.enq(val0);
-	      
 	      	let val1 <- exph1.response.get();
-	      	fterm1.enq(val1);
+	      	fterm0.enq(val1);
 	      	
 		let val2 <- exph2.response.get();
-	      	fterm2.enq(val2);
+	      	fterm1.enq(val2);
 	      	
 		let val3 <- exph3.response.get();
-	      	fterm3.enq(val3);
+	      	fterm2.enq(val3);
 	      	
 		let val4 <- exph4.response.get();
-	      	fterm4.enq(val4);
+	      	fterm3.enq(val4);
 	      	
 		let val5 <- exph5.response.get();
-	      	fterm5.enq(val5);
-	      
+	      	fterm4.enq(val5);
+	  
+	  	let val6 <- exph6.response.get();
+	      	fterm5.enq(val6);
+	        
 	       
 	endrule	
 
@@ -89,8 +89,13 @@ module mkEexpF(EexpFIFC);
 		Float  fRes2 = fterm2.first/24; fterm2.deq;
 		Float  fRes3 = fterm3.first/120; fterm3.deq;
 		Float  fRes4 = fterm4.first/720; fterm4.deq;
-		Float  fRes5 = fterm5.first/5040; fterm5.deq;		
-		prfinal.enq(fRes); 
+		Float  fRes5 = fterm5.first/5040; fterm5.deq;	
+
+		// We have to add floating point addition too. For that make 
+		// use of the mkAddition module	already there and comeback here. 
+		// It is giving that error again. 
+		let finalz = 1 + fRes + fRes0 + fRes1 + fRes2 + fRes3 + fRes4 + fRes5;
+		prfinal.enq(finalz); 
 	endrule
 
 	rule r5;
