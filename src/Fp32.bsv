@@ -30,6 +30,10 @@ module mkEexpF(EexpFIFC);
 	FIFO#(Float) fterm4 <- mkFIFO;
 	FIFO#(Float) fterm5 <- mkFIFO;
 	
+	FIFO#(Float) fStage10 <- mkFIFO;
+	FIFO#(Float) fStage11 <- mkFIFO;
+	FIFO#(Float) fStage12 <- mkFIFO;
+	FIFO#(Float) fStage13 <- mkFIFO;
 
 	FIFO#(Float) prfinal <- mkFIFO;
         
@@ -100,12 +104,13 @@ module mkEexpF(EexpFIFC);
 		fRes5.enq((fterm5.first/5040)); fterm5.deq;	
 	endrule
 
-	rule r5;
-		// We have to add floating point addition too. For that make 
-		// use of the mkAddition module	already there and comeback here. 
-		// It is giving that error again. 
-		// let finalz = 1 + fRes + fRes0 + fRes1 + fRes2 + fRes3 + fRes4 + fRes5;
-		//let finalz = 1 + fRes.first + fRes0.first + fRes1.first + fRes2.first+ fRes3.first + fRes4.first + fRes5.first;
+	rule addStage0;
+
+		fStage10.enq(fRes.first + fRes0.first);
+		fStage11.enq(fRes1.first + fRes2.first);
+		fStage12.enq(fRes3.first + fRes4.first);
+		fStage13.enq(fRes5.first + 0);
+
 		fRes.deq;
 		fRes0.deq;
 		fRes1.deq;
@@ -113,14 +118,10 @@ module mkEexpF(EexpFIFC);
 		fRes3.deq;
 		fRes4.deq;
 		fRes5.deq;
+	endrule
 
-		let finalz = fRes.first + fRes0.first;
-		let finalz0 = fRes1.first + fRes2.first;
-		let finalz1 = fRes3.first + fRes4.first;
-		let finalz2 = fRes5.first + 0;
-
-		prfinal.enq(finalz); 
-
+	rule addStage1;
+		
 	endrule
 
 	rule r6;
