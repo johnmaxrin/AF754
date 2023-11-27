@@ -221,7 +221,6 @@ module mkExpH(ExpHIFC);
 		mult.request.put(tuple3(acc1,x1,Rnd_Nearest_Even));		
 		i <= i + 1;
 		r2r3 <= False;
-		$display("@r2 Prev i %d n:%d",i,ni);
 	endrule
 
 	rule r3(i < ni && !r2r3 );
@@ -229,7 +228,6 @@ module mkExpH(ExpHIFC);
 		Float tempRes = tpl_1(temp);
 		acc1 <= tempRes;
 		r2r3 <= True;
-		$display("Prev i %d n:%d",i,ni);
 	endrule
 
 	rule r4(i == ni);
