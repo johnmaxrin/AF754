@@ -34,7 +34,10 @@ module mkEexpF(EexpFIFC);
 	FIFO#(Float) fStage11 <- mkFIFO;
 	FIFO#(Float) fStage12 <- mkFIFO;
 	FIFO#(Float) fStage13 <- mkFIFO;
-
+	
+	FIFO#(Float) fStage20 <- mkFIFO;
+	FIFO#(Float) fStage21 <- mkFIFO;
+	
 	FIFO#(Float) prfinal <- mkFIFO;
         
 
@@ -109,7 +112,7 @@ module mkEexpF(EexpFIFC);
 		fStage10.enq(fRes.first + fRes0.first);
 		fStage11.enq(fRes1.first + fRes2.first);
 		fStage12.enq(fRes3.first + fRes4.first);
-		fStage13.enq(fRes5.first + 0);
+		fStage13.enq(fRes5.first + 1);
 
 		fRes.deq;
 		fRes0.deq;
@@ -121,7 +124,19 @@ module mkEexpF(EexpFIFC);
 	endrule
 
 	rule addStage1;
-		
+		fStage20.enq(fStage10.first + fStage11.first);
+		fStage21.enq(fStage12.first + fStage13.first);
+
+		fStage10.deq;
+		fStage11.deq;
+		fStage12.deq;
+		fStage13.deq;
+	endrule
+
+	rule addStage2;
+		prfinal.enq(fStage20.first + fStage21.first);
+		fStage20.deq;
+		fStage21.deq;
 	endrule
 
 	rule r6;

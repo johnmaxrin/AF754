@@ -15,7 +15,7 @@ module mkActivation();
 
 	EexpFIFC eexpf <- mkEexpF;
 	rule r1_A;
-		eexpf.request.put(4);
+		eexpf.request.put(3);
 	endrule	
 
 	rule r2_A;
