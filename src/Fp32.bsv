@@ -20,6 +20,8 @@ module mkEexpF(EexpFIFC);
 	FIFO#(Tuple2#(Float, Exception)) tterm3 <- mkFIFO;
 	FIFO#(Tuple2#(Float, Exception)) tterm4 <- mkFIFO;
 	FIFO#(Tuple2#(Float, Exception)) tterm5 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm6 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Exception)) tterm7 <- mkFIFO;
 	
 	
 	FIFO#(Float) fterm <- mkFIFO;
@@ -29,15 +31,23 @@ module mkEexpF(EexpFIFC);
 	FIFO#(Float) fterm3 <- mkFIFO;
 	FIFO#(Float) fterm4 <- mkFIFO;
 	FIFO#(Float) fterm5 <- mkFIFO;
+	FIFO#(Float) fterm6 <- mkFIFO;
+	FIFO#(Float) fterm7 <- mkFIFO;
 	
 	FIFO#(Float) fStage10 <- mkFIFO;
 	FIFO#(Float) fStage11 <- mkFIFO;
 	FIFO#(Float) fStage12 <- mkFIFO;
 	FIFO#(Float) fStage13 <- mkFIFO;
+	FIFO#(Float) fStage14 <- mkFIFO;
 	
 	FIFO#(Float) fStage20 <- mkFIFO;
 	FIFO#(Float) fStage21 <- mkFIFO;
-	
+	FIFO#(Float) fStage22 <- mkFIFO;
+
+
+	FIFO#(Float) fStage30 <- mkFIFO;
+	FIFO#(Float) fStage31 <- mkFIFO;
+
 	FIFO#(Float) prfinal <- mkFIFO;
         
 
@@ -47,6 +57,8 @@ module mkEexpF(EexpFIFC);
 	ExpHIFC exph4 <- mkExpH;
 	ExpHIFC exph5 <- mkExpH;
 	ExpHIFC exph6 <- mkExpH;
+	ExpHIFC exph7 <- mkExpH;
+	ExpHIFC exph8 <- mkExpH;
 	
 	FIFO#(Float) fRes <- mkFIFO;
 	FIFO#(Float) fRes0 <- mkFIFO;
@@ -55,6 +67,8 @@ module mkEexpF(EexpFIFC);
 	FIFO#(Float) fRes3 <- mkFIFO;
 	FIFO#(Float) fRes4 <- mkFIFO;
 	FIFO#(Float) fRes5 <- mkFIFO;
+	FIFO#(Float) fRes6 <- mkFIFO;
+	FIFO#(Float) fRes7 <- mkFIFO;
 	
 	rule r1;
 		temp.enq(req.first); 
@@ -69,31 +83,39 @@ module mkEexpF(EexpFIFC);
 		exph4.request.put(tuple2(temp.first,5));		
 		exph5.request.put(tuple2(temp.first,6));		
 		exph6.request.put(tuple2(temp.first,7));		
+		exph7.request.put(tuple2(temp.first,8));		
+		exph8.request.put(tuple2(temp.first,9));		
 		temp.deq;
 	endrule
 	
-	
-// Simple Error Here!
 
 	rule r3;
-	      	let val1 <- exph1.response.get();
-	      	fterm0.enq(val1);
+	
+	    let val1 <- exph1.response.get();
+	  	fterm0.enq(val1);
 	      	
 		let val2 <- exph2.response.get();
-	      	fterm1.enq(val2);
+	   	fterm1.enq(val2);
 	      	
 		let val3 <- exph3.response.get();
-	      	fterm2.enq(val3);
+      	fterm2.enq(val3);
 	      	
-		let val4 <- exph4.response.get();
-	      	fterm3.enq(val4);
+		let val4 <- exph4.response.get();	    
+		fterm3.enq(val4);
 	      	
 		let val5 <- exph5.response.get();
-	      	fterm4.enq(val5);
+     	fterm4.enq(val5);
 	  
 	  	let val6 <- exph6.response.get();
-	      	fterm5.enq(val6);
-	        
+      	fterm5.enq(val6);
+	
+	  	let val7 <- exph7.response.get();
+      	fterm6.enq(val7);
+
+	  	let val8 <- exph8.response.get();
+      	fterm7.enq(val8);
+	
+
 	       
 	endrule	
 
@@ -105,6 +127,8 @@ module mkEexpF(EexpFIFC);
 		fRes3.enq((fterm3.first/120)); fterm3.deq;
 		fRes4.enq((fterm4.first/720)); fterm4.deq;
 		fRes5.enq((fterm5.first/5040)); fterm5.deq;	
+		fRes6.enq((fterm6.first/40320)); fterm6.deq;	
+		fRes7.enq((fterm7.first/362880)); fterm7.deq;	
 	endrule
 
 	rule addStage0;
@@ -112,7 +136,8 @@ module mkEexpF(EexpFIFC);
 		fStage10.enq(fRes.first + fRes0.first);
 		fStage11.enq(fRes1.first + fRes2.first);
 		fStage12.enq(fRes3.first + fRes4.first);
-		fStage13.enq(fRes5.first + 1);
+		fStage13.enq(fRes5.first + fRes6.first);
+		fStage14.enq(fRes7.first + 1);
 
 		fRes.deq;
 		fRes0.deq;
@@ -121,22 +146,36 @@ module mkEexpF(EexpFIFC);
 		fRes3.deq;
 		fRes4.deq;
 		fRes5.deq;
+		fRes6.deq;
+		fRes7.deq;
 	endrule
 
 	rule addStage1;
 		fStage20.enq(fStage10.first + fStage11.first);
 		fStage21.enq(fStage12.first + fStage13.first);
+		fStage22.enq(fStage14.first + 0);
 
 		fStage10.deq;
 		fStage11.deq;
 		fStage12.deq;
 		fStage13.deq;
+		fStage14.deq;
 	endrule
 
 	rule addStage2;
-		prfinal.enq(fStage20.first + fStage21.first);
+		fStage30.enq(fStage20.first + fStage21.first);
+		fStage31.enq(fStage22.first + 0);
+
 		fStage20.deq;
 		fStage21.deq;
+		fStage22.deq;
+	endrule
+
+
+	rule addStage3;
+		prfinal.enq(fStage30.first + fStage31.first);
+		fStage30.deq;
+		fStage31.deq;
 	endrule
 
 	rule r6;
@@ -151,17 +190,17 @@ endmodule
 module mkExpH(ExpHIFC);
 	
 	FpMULTIFC mult <- mkFloatingPointMultiplier;
-	FIFO#(Tuple2#(Float, Bit#(3))) req <- mkFIFO;
+	FIFO#(Tuple2#(Float, Bit#(4))) req <- mkFIFO;
 	FIFO#(Float) res <- mkFIFO;
 	
 	FIFO#(Tuple3#(Float, Float, RoundMode)) multReq <- mkFIFO;
 	FIFO#(Tuple2#(Float, Exception)) multRes <- mkFIFO;
 	
-	FIFO#(Tuple2#(Float, Bit#(3))) temp1 <- mkFIFO;
-	FIFO#(Tuple2#(Float, Bit#(3))) r1temp <- mkFIFO;
+	FIFO#(Tuple2#(Float, Bit#(4))) temp1 <- mkFIFO;
+	FIFO#(Tuple2#(Float, Bit#(4))) r1temp <- mkFIFO;
 
-	Reg#(Bit#(3)) ni <- mkReg(0);  //Jugaad
-	Reg#(Bit#(3)) i <- mkReg(0);
+	Reg#(Bit#(4)) ni <- mkReg(0);  //Jugaad
+	Reg#(Bit#(4)) i <- mkReg(0);
 	
 	Reg#(Float) acc1 <- mkReg(1);
 	Reg#(Bool) r2r3 <- mkReg(True);
