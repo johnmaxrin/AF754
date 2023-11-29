@@ -9,6 +9,8 @@ import GetPut :: *;
 export mkExpH;
 export mkEexpF;
 
+
+
 module mkEexpF(EexpFIFC);
 	FIFO#(Float) res <- mkFIFO;
 	FIFO#(Float) req <- mkFIFO;
@@ -133,11 +135,13 @@ module mkEexpF(EexpFIFC);
 
 	rule addStage0;
 
-		fStage10.enq(fRes.first + fRes0.first);
-		fStage11.enq(fRes1.first + fRes2.first);
-		fStage12.enq(fRes3.first + fRes4.first);
-		fStage13.enq(fRes5.first + fRes6.first);
-		fStage14.enq(fRes7.first + 1);
+
+		// Change here for e^x and e^(-x)
+		fStage10.enq(1 - fRes.first);
+		fStage11.enq(fRes0.first - fRes1.first);
+		fStage12.enq(fRes2.first - fRes3.first);
+		fStage13.enq(fRes4.first - fRes5.first);
+		fStage14.enq(fRes6.first - fRes7.first);
 
 		fRes.deq;
 		fRes0.deq;
