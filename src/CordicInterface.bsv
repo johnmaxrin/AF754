@@ -4,8 +4,11 @@ import ClientServer :: *;
 import FloatingPoint :: *;
 
 interface CordicIFC;
-    interface Server  #(Bit#(16), Bit#(16)) cordicServerIFC;
+    interface Server  #(Float, Float) cordicServerIFC;
     //method Action dometh(Bit#(16));
 endinterface
+
+
+typedef Server #(Bit#(24), Bit#(24)) FractionValueIFC;
 
 endpackage
