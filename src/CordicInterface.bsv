@@ -2,6 +2,7 @@ package CordicInterface;
 
 import ClientServer :: *;
 import FloatingPoint :: *;
+import FixedPoint :: *;
 
 interface CordicIFC;
     interface Server  #(Float, Float) cordicServerIFC;
@@ -9,6 +10,6 @@ interface CordicIFC;
 endinterface
 
 
-typedef Server #(Bit#(24), Bit#(24)) FractionValueIFC;
+typedef Server #(Float, FixedPoint#(24,24)) FixedPointConvertIFC;
 
 endpackage
