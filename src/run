@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$1" == "c" ]; then
+    bsc -sim -g mkMain -u  cordic.bsv
+    bsc -sim -e mkMain -o cordic.out
+
+elif [ "$1" == "r" ]; then
+    ./cordic.out
+
+else
+    echo "Usage $0 [c|r]"
+    exit 1
+fi
