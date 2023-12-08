@@ -25,7 +25,7 @@ module mkFixedPointConvertModule(FixedPointConvertIFC);
     Vector #(6, FIFO #(Tuple3 #(Bit #(24), Bit #(24), Bit#(24)))) fifoacc <- replicateM(mkFIFO);
 
     FIFO #(Float) req <- mkFIFO;
-    FIFO #(FixedPoint#(24,24)) res <- mkFIFO;
+    FIFO #(CordicFxp) res <- mkFIFO;
 
     FIFO#(Tuple2#(Bit#(24),Bit#(24))) initValue <- mkFIFO;
 
@@ -67,9 +67,11 @@ module mkFixedPointConvertModule(FixedPointConvertIFC);
 
     rule endIter;
         match{.intr, .frac, .acc5} = fifoacc[5].first; fifoacc[5].deq;
-        FixedPoint #(24,24) x;
-        x.i = intr;
-        x.f = acc5;
+        CordicFxp x;
+        x.i[31:24] = 0;
+        x.f[31:24] = 0;
+        x.i[23:0] = intr;
+        x.f[23:0] = acc5;
         res.enq(x);
     endrule 
     
