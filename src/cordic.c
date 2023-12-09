@@ -21,8 +21,8 @@ int main()
 		if(currAngle < rangle)
 		{
 			currAngle = currAngle + angleArray[i] ;
-			x = cx - (cy >> i);
-			y = (cx >> i) + cy;
+			x = cx - (cy << i);
+			y = (cx << i) + cy;
 			
 			if(i == 0)
 				printf("X%d: %d Y%d: %d\n",i, x , i , y);	
@@ -32,8 +32,8 @@ int main()
 		{
 		
 			currAngle = currAngle - angleArray[i];
-			x = cx + (cy >> i);
-			y = cy - (cx >> i);	
+			x = cx + (cy << i);
+			y = cy - (cx << i);	
 		
 			if(i == 1)
 				printf("X%d: %d Y%d: %d\n",i, x , i ,  y);
