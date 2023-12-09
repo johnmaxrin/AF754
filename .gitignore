@@ -7,3 +7,4 @@ src/*.bo
 *.h
 *.swp
 src/Fp32.bo
+tst*
