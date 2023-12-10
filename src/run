@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ "$1" == "c" ]; then
-    bsc -sim -g mkMain -u  cordic.bsv
-    bsc -sim -e mkMain -o cordic.out
+    bsc -sim -g mkTestBench -u  Testbench.bsv
+    bsc -sim -e mkTestBench -o cordic.out
 
 elif [ "$1" == "r" ]; then
     ./cordic.out
