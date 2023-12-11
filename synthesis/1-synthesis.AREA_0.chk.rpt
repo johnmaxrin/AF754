@@ -1,0 +1,38 @@
+
+72. Executing CHECK pass (checking for obvious problems).
+Checking module mkMain...
+Warning: Wire mkMain.\response_get [31] is used but has no driver.
+Warning: Wire mkMain.\response_get [30] is used but has no driver.
+Warning: Wire mkMain.\response_get [29] is used but has no driver.
+Warning: Wire mkMain.\response_get [28] is used but has no driver.
+Warning: Wire mkMain.\response_get [27] is used but has no driver.
+Warning: Wire mkMain.\response_get [26] is used but has no driver.
+Warning: Wire mkMain.\response_get [25] is used but has no driver.
+Warning: Wire mkMain.\response_get [24] is used but has no driver.
+Warning: Wire mkMain.\response_get [23] is used but has no driver.
+Warning: Wire mkMain.\response_get [22] is used but has no driver.
+Warning: Wire mkMain.\response_get [21] is used but has no driver.
+Warning: Wire mkMain.\response_get [20] is used but has no driver.
+Warning: Wire mkMain.\response_get [19] is used but has no driver.
+Warning: Wire mkMain.\response_get [18] is used but has no driver.
+Warning: Wire mkMain.\response_get [17] is used but has no driver.
+Warning: Wire mkMain.\response_get [16] is used but has no driver.
+Warning: Wire mkMain.\response_get [15] is used but has no driver.
+Warning: Wire mkMain.\response_get [14] is used but has no driver.
+Warning: Wire mkMain.\response_get [13] is used but has no driver.
+Warning: Wire mkMain.\response_get [12] is used but has no driver.
+Warning: Wire mkMain.\response_get [11] is used but has no driver.
+Warning: Wire mkMain.\response_get [10] is used but has no driver.
+Warning: Wire mkMain.\response_get [9] is used but has no driver.
+Warning: Wire mkMain.\response_get [8] is used but has no driver.
+Warning: Wire mkMain.\response_get [7] is used but has no driver.
+Warning: Wire mkMain.\response_get [6] is used but has no driver.
+Warning: Wire mkMain.\response_get [5] is used but has no driver.
+Warning: Wire mkMain.\response_get [4] is used but has no driver.
+Warning: Wire mkMain.\response_get [3] is used but has no driver.
+Warning: Wire mkMain.\response_get [2] is used but has no driver.
+Warning: Wire mkMain.\response_get [1] is used but has no driver.
+Warning: Wire mkMain.\response_get [0] is used but has no driver.
+Warning: Wire mkMain.\RDY_response_get is used but has no driver.
+Warning: Wire mkMain.\RDY_request_put is used but has no driver.
+Found and reported 34 problems.

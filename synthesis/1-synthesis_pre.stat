@@ -1,0 +1,29 @@
+
+59. Printing statistics.
+
+=== mkMain ===
+
+   Number of wires:              92247
+   Number of wire bits:         106959
+   Number of public wires:         816
+   Number of public wire bits:   15460
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:             101972
+     $_ANDNOT_                   35082
+     $_AND_                       3327
+     $_DFFE_PP_                   3963
+     $_DFF_P_                     4555
+     $_MUX_                       7494
+     $_NAND_                      1777
+     $_NOR_                       4641
+     $_NOT_                       3864
+     $_ORNOT_                     2469
+     $_OR_                       22772
+     $_SDFFE_PN0P_                 143
+     $_SDFFE_PN1P_                 143
+     $_SDFF_PP0_                    64
+     $_XNOR_                      3320
+     $_XOR_                       8358
+
