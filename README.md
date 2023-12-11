@@ -12,8 +12,8 @@ This repository implements various activation functions in Bluespec, focusing on
 ## Implementation Details
 
 1. **Floating Point to Fixed Point:**
-   - The project includes a robust mechanism for converting floating-point numbers to fixed-point representation. This conversion is crucial for working with fixed-point arithmetic in the context of hardware description languages like Bluespec.
-   - This conversion is a critical step, ensuring compatibility between the IEEE 754 Single Precision format and the fixed-point representation necessary for efficient hardware implementation of CORDIC Algorithm.
+   - The project includes a mechanism for converting floating-point numbers to fixed-point representation. This conversion is needed for working with fixed-point arithmetic in the context of hardware description languages like Bluespec.
+   - This conversion is an important step, ensuring compatibility between the IEEE 754 Single Precision format and the fixed-point representation necessary for hardware implementation of CORDIC Algorithm.
   
 2. **Exponential Module:**
 The exponential function (e^x) is a common component for three of the activation functions. The Exponential module is designed to compute e^x or e^-x using the CORDIC algorithm. The mathematical relationships used are e^x = sinh(x) + cosh(x) and e^-x = sinh(x) - cosh(x).
